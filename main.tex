@@ -1020,11 +1020,11 @@ q_s(\sigma^s,\gamma^s)=\frac{q_s(u^s,\xi^s)}{|J(u^s,\xi^s)|}.
 
 \subsubsection*{Delta-method expectations needed by CAVI}
 
-Many CAVI updates require expectations of the form $\E_q[g(\sigma^s,\gamma^s)]$. Under \eqref{eq:q_u_xi_and_induced},
-for any twice-differentiable $g(u,\xi)$ define $g^\sharp(\sigma,\gamma):=g(\log\sigma,\xi(\gamma))$.
+Many CAVI updates require expectations of the form $\E_q[h(\sigma^s,\gamma^s)]$. Under \eqref{eq:q_u_xi_and_induced},
+define $g(u,\xi):=h(e^{u},\gamma(\xi))$ so that $\E_q[h(\sigma^s,\gamma^s)]=\E_{q_s(u,\xi)}[g(u,\xi)]$.
 With $Z=(u^s,\xi^s)\sim \N(\hat\mu_s,\hat\Sigma_s)$, the (second-order) Delta method gives
 \begin{equation}
-\E_q[g^\sharp(\sigma^s,\gamma^s)]
+\E_q[h(\sigma^s,\gamma^s)]
 =\E_{q_s(u,\xi)}[g(u,\xi)]
 \approx g(\hat\mu_s) + \frac12\,\tr\!\Big(\nabla^2 g(\hat\mu_s)\,\hat\Sigma_s\Big),
 \qquad \hat\mu_s=(\hat u^s,\hat\xi^s)^\T.
