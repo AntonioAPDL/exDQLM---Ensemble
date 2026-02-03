@@ -341,7 +341,8 @@ p(\gamma\mid \text{rest})
 t_{(L,U)}(\gamma\mid m_\gamma,s_\gamma;\nu_\gamma)
 \prod_{t=1}^T \Big(\sigma B(p)\,v_t\Big)^{-1/2}\nonumber\\
 &\times \exp\!\left(
--\frac{\big[y_t-\eta_t-A(p)v_t-C(p,\gamma)\sigma|\gamma|s_t\big]^2}{2\sigma B(p)\,v_t}
+-\sum_{t=1}^T
+\frac{\big[y_t-\eta_t-A(p)v_t-C(p,\gamma)\sigma|\gamma|s_t\big]^2}{2\sigma B(p)\,v_t}
 \right)\1(L<\gamma<U).\label{eq:cond_gamma}
 \end{align}
 This is the target for a 1D Metropolis--Hastings update (or a joint update with $\sigma$).
