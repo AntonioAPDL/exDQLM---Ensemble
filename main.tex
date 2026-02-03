@@ -731,7 +731,7 @@ The $\E_q[\tilde y_n/R_n]$ quantity used in the Gaussian variational smoother is
 % ===========================
 % NEW SECTION TO INSERT
 % ===========================
-\subsection{State update (trans-dimensional Gaussian block): FFBS for MCMC and FBBS/RTS for VB}
+\subsection{State update (trans-dimensional Gaussian block): FFBS for MCMC and RTS smoothing for VB}
 \label{sec:state_ffbs_vb}
 
 This section makes explicit the ``FFBS placeholder'' steps in the Gibbs sampler and in the CAVI update for
@@ -815,7 +815,7 @@ Then the exact backward conditional is
 \end{equation}
 which remains valid when $\bm G_{\tau+1}$ is rectangular (trans-dimensional case).
 
-\subsubsection*{VB: Gaussian variational smoother (FBBS/RTS) for $q(\bm x_{0:\mathcal{T}})$}
+\subsubsection*{VB: Gaussian variational smoother (RTS) for $q(\bm x_{0:\mathcal{T}})$}
 In CAVI, the optimal $q(\bm x_{0:\mathcal{T}})$ is Gaussian because the expected log-joint is quadratic in the states.
 This update can be implemented as a \emph{deterministic} Kalman smoother with pseudo-data constructed from the
 expected natural parameters in \eqref{eq:vb_info_wb}.
@@ -1001,6 +1001,12 @@ Define the transformed objective
 \tilde f_s(u^s,\xi^s) := f_s(e^{u^s},\gamma^s(\xi^s)) + \log|J(u^s,\xi^s)|.
 \label{eq:f_tilde_def}
 \end{equation}
+
+\paragraph{Remark (smoothness at $\gamma^s=0$).}
+Because the mapping $\gamma^s\mapsto(p^s,A^s,B^s,C^s)$ involves $|\gamma^s|$ (and sign indicators in $p(\cdot)$ and $C(\cdot)$),
+$f_s(\sigma^s,\gamma^s)$ need not be twice differentiable at $\gamma^s=0$.
+The Laplace approximation below implicitly assumes the mode $\hat\gamma^s$ lies away from such nonsmooth points
+(or, equivalently, that optimization is performed separately on $(L,0)$ and $(0,U)$).
 
 \paragraph{Laplace approximation (mode and curvature).}
 Let
