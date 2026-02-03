@@ -97,7 +97,7 @@ y_t^o \mid \bm\alpha_t,\sigma^o,\gamma^o
 &\sim \N\!\big(\tilde{\bm G}_t\bm\alpha_{t-1},\;\tilde{\bm W}_t\big).
 \end{align}
 
-\section{Model B (add $J$ retrospective products via discrepancy states)}
+\section{Model B (add \texorpdfstring{$J$}{J} retrospective products via discrepancy states)}
 
 For $t=1,\dots,T$ and $j=1,\dots,J$:
 \begin{align}
@@ -213,7 +213,7 @@ All conditionals below apply \emph{source-wise} (baseline and each forecaster), 
 \item Forecast ensemble member $y_T^{j,i}(k)$: $\eta_{T+k}=\bm e_{T+k,j+1}^\T\bm\beta_{T+k}$.
 \end{itemize}
 
-\subsection{Full conditional of $v_t$ (GIG)}
+\subsection{Full conditional of \texorpdfstring{$v_t$}{vt} (GIG)}
 
 Define
 \[
@@ -234,7 +234,7 @@ We use the $\GIG(\lambda,\chi,\psi)$ density
 f(x)\propto x^{\lambda-1}\exp\!\left(-\frac{\chi/x+\psi x}{2}\right)\1(x>0).
 \]
 
-\subsection{Full conditional of $s_t$ (truncated Normal)}
+\subsection{Full conditional of \texorpdfstring{$s_t$}{st} (truncated Normal)}
 
 Let
 \[
@@ -296,7 +296,7 @@ Stacking $\tilde{\bm y}_\tau=(\tilde y_{\tau,o})_{o\in\mathcal{O}_\tau}$ and let
 Here $\bm x_\tau$ denotes the relevant state vector: $\bm\alpha_t$ (Model A), the stacked $(\bm\alpha_t,\bm\delta_t^1,\dots,\bm\delta_t^J)$ (Model B),
 or $\bm\beta_{T+k}$ (Model C). The FFBS/Kalman simulation smoother applies directly with the multivariate observation equation above.
 
-\subsection{Full conditional of $\sigma$ (GIG)}
+\subsection{Full conditional of \texorpdfstring{$\sigma$}{sigma} (GIG)}
 
 Let
 \[
@@ -328,7 +328,7 @@ p(\sigma\mid \text{rest})
 \right).\label{eq:cond_sigma}
 \end{align}
 
-\subsection{Full conditional of $\gamma$ (non-conjugate; target density)}
+\subsection{Full conditional of \texorpdfstring{$\gamma$}{gamma} (non-conjugate; target density)}
 
 There is no conjugate form due to the dependence
 \[
@@ -347,7 +347,7 @@ t_{(L,U)}(\gamma\mid m_\gamma,s_\gamma;\nu_\gamma)
 \end{align}
 This is the target for a 1D Metropolis--Hastings update (or a joint update with $\sigma$).
 
-\subsection{Joint posterior kernel for $(\sigma,\gamma)$ for one source}
+\subsection{Joint posterior kernel for \texorpdfstring{$(\sigma,\gamma)$}{(sigma,gamma)} for one source}
 
 Fix a single parameter pair $(\sigma,\gamma)$ corresponding to one source (baseline or forecaster).
 Let $\mathcal{I}$ index all scalar observations governed by this pair.
@@ -385,7 +385,7 @@ For forecaster $j$, take $\mathcal{I}=\{t: z_t^j\}\cup\{(k,i): y_T^{j,i}(k)\}$, 
 
 \section{Inverse-Wishart / Wishart full conditionals (matrix blocks)}
 
-\subsection{Evolution covariance $W$ (inverse-Wishart conjugacy)}
+\subsection{Evolution covariance \texorpdfstring{$W$}{W} (inverse-Wishart conjugacy)}
 Let $\bm\theta_t\in\R^q$ satisfy $\bm\theta_t=\bm G_t\bm\theta_{t-1}+\bm\omega_t$ with $\bm\omega_t\sim\N(\bm 0,\bm W)$ i.i.d.\ and prior $\bm W\sim \IW(\nu_0,\bm S_0)$.
 Define residuals $\bm\omega_t=\bm\theta_t-\bm G_t\bm\theta_{t-1}$ and $\bm\Omega=\sum_{t=1}^T \bm\omega_t\bm\omega_t^\T$.
 Then
@@ -889,7 +889,7 @@ when updating $q(\bm W_\tau)$.
 % ===========================
 % NEW SECTION TO INSERT
 % ===========================
-\subsection{Laplace--Delta approximation for $q(\sigma^s,\gamma^s)$ and ELBO contributions}
+\subsection{Laplace--Delta approximation for \texorpdfstring{$q(\sigma^s,\gamma^s)$}{q(sigma(s),gamma(s))} and ELBO contributions}
 \label{sec:laplace_delta_elbo}
 
 This subsection derives (i) an evaluable expected log-joint target for the nonconjugate factor
@@ -1221,7 +1221,7 @@ where:
 are closed-form given the current variational parameters of $q(v_n)$ and $q(s_n)$.
 \end{itemize}
 
-\subsection{State-block contribution $\mathcal{L}_{x}(q)$}
+\subsection{State-block contribution \texorpdfstring{$\mathcal{L}_{x}(q)$}{Lx(q)}}
 
 Assume the prior $\bm x_0\sim\N(\bm m_0,\bm C_0)$ and transitions
 $\bm x_\tau\mid \bm x_{\tau-1},\bm W_\tau\sim\N(\bm G_\tau \bm x_{\tau-1},\bm W_\tau)$ for $\tau\ge 1$.
@@ -1315,7 +1315,7 @@ $w_{\tau,o}=\E_q[1/R_{\tau,o}]$ (cf.\ \eqref{eq:vb_info_wb}), then the blocks ar
 \end{align}
 with rectangular $\bm G_\tau$ allowed (hence rectangular off-diagonal blocks).
 
-\subsection{Inverse-Wishart block contributions $\mathcal{L}_{W_b}(q)$}
+\subsection{Inverse-Wishart block contributions \texorpdfstring{$\mathcal{L}_{W_b}(q)$}{LWb(q)}}
 
 Let $\bm W_b\in\R^{p_b\times p_b}$ be any covariance block with prior $\bm W_b\sim\IW(\nu_{0,b},\bm S_{0,b})$
 (density proportional to $|\bm W_b|^{-(\nu_{0,b}+p_b+1)/2}\exp\{-\tfrac12\tr(\bm S_{0,b}\bm W_b^{-1})\}$).
@@ -1360,7 +1360,7 @@ Then
 Plugging \eqref{eq:iw_Einv}--\eqref{eq:iw_Elogdet} into \eqref{eq:elbo_iw_prior}--\eqref{eq:elbo_iw_q}
 gives a closed form for $\mathcal{L}_{W_b}(q)$.
 
-\subsection{Latent truncation prior for $s_n$: $\mathcal{L}_{n}^{(s\text{-prior})}(q)$}
+\subsection{Latent truncation prior for \texorpdfstring{$s_n$}{sn}: \texorpdfstring{$\mathcal{L}_{n}^{(s\text{-prior})}(q)$}{Ln(s-prior)(q)}}
 
 The augmentation prior is $s_n\sim\N^+(0,1)$ with density $p(s)=2\phiN(s)\1(s>0)$.
 Thus,
@@ -1373,7 +1373,7 @@ Thus,
 \end{equation}
 where $\E_q[s_n^2]$ is available from \eqref{eq:truncnorm_moments}.
 
-\subsection{Entropy of $q(v_n)$ (GIG) and $q(s_n)$ (truncated Normal)}
+\subsection{Entropy of \texorpdfstring{$q(v_n)$}{q(vn)} (GIG) and \texorpdfstring{$q(s_n)$}{q(sn)} (truncated Normal)}
 
 \paragraph{Entropy of $q(v_n)=\GIG(\lambda,\chi_n,\psi_{s(n)})$.}
 Let $q(v)=\GIG(\lambda,\chi,\psi)$ with density
@@ -1413,7 +1413,7 @@ Then
 \end{equation}
 which reduces to the usual Gaussian entropy $\tfrac12\log(2\pi eV)$ as $u\to\infty$.
 
-\subsection{Nonconjugate $(\sigma^s,\gamma^s)$ contribution}
+\subsection{Nonconjugate \texorpdfstring{$(\sigma^s,\gamma^s)$}{(sigma(s),gamma(s))} contribution}
 
 For each source $s\in\mathcal{S}$, the complete ELBO contribution of the nonconjugate factor
 $q(\sigma^s,\gamma^s)$ (including the $\sigma$ and $\gamma$ priors, the exponential term $v_n\mid\sigma^s$,
