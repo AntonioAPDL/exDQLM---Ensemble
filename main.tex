@@ -474,28 +474,34 @@ d^s := C^s\,\sigma^s|\gamma^s|,
 \qquad
 R_n := \sigma^s B^s v_n.
 \]
-Then
-\begin{equation}
-s_n \mid \text{rest} \sim \N^+(m_{s,n},V_{s,n}),
-\quad
-V_{s,n}=\left(1+\frac{(d^s)^2}{R_n}\right)^{-1}
-=\left(1+\frac{(C^s)^2\,\sigma^s(\gamma^s)^2}{B^s\,v_n}\right)^{-1},
-\quad
-m_{s,n}=V_{s,n}\left(\frac{d^s\,y_n^\circ}{R_n}\right)
-=V_{s,n}\left(\frac{C^s|\gamma^s|}{B^s v_n}y_n^\circ\right).
-\label{eq:gibbs_s_alg}
-\end{equation}
+	Then
+	\begin{equation}
+	\begin{aligned}
+	s_n \mid \text{rest} &\sim \N^+(m_{s,n},V_{s,n}),\\
+	V_{s,n}
+	&=\left(1+\frac{(d^s)^2}{R_n}\right)^{-1}
+	=\left(1+\frac{(C^s)^2\,\sigma^s(\gamma^s)^2}{B^s\,v_n}\right)^{-1},\\
+	m_{s,n}
+	&=V_{s,n}\left(\frac{d^s\,y_n^\circ}{R_n}\right)
+	=V_{s,n}\left(\frac{C^s|\gamma^s|}{B^s v_n}y_n^\circ\right).
+	\end{aligned}
+	\label{eq:gibbs_s_alg}
+	\end{equation}
 
 \paragraph{(3) Update state trajectories (Gaussian; FFBS placeholder).}
 Using the pseudo-observations \eqref{eq:pseudo_obs_alg} (stacked per time $\tau$ as needed),
-sample the full state path via a Kalman simulation smoother / FFBS:
-\begin{equation}
-\bm x_{0:\text{end}} \mid \text{rest} \;\;\text{is Gaussian and sampled by FFBS for the DLM}\;\;
-\tilde{\bm y}_\tau \mid \bm x_\tau \sim \N(\bm H_\tau^\T\bm x_\tau,\bm R_\tau),
-\qquad
-\bm x_\tau \mid \bm x_{\tau-1}\sim \N(\bm G_\tau \bm x_{\tau-1},\bm W_\tau).
-\label{eq:gibbs_ffbs_placeholder}
-\end{equation}
+	sample the full state path via a Kalman simulation smoother / FFBS:
+	\begin{equation}
+	\begin{aligned}
+	\bm x_{0:\text{end}} \mid \text{rest}
+	&\;\text{is Gaussian and sampled by FFBS for the DLM},\\
+	\tilde{\bm y}_\tau \mid \bm x_\tau
+	&\sim \N(\bm H_\tau^\T\bm x_\tau,\bm R_\tau),\\
+	\bm x_\tau \mid \bm x_{\tau-1}
+	&\sim \N(\bm G_\tau \bm x_{\tau-1},\bm W_\tau).
+	\end{aligned}
+	\label{eq:gibbs_ffbs_placeholder}
+	\end{equation}
 Here $\bm x_\tau$ is $\bm\alpha_t$ (Model A), the stacked $(\bm\alpha_t,\bm\delta_t^1,\dots,\bm\delta_t^J)$ (Model B),
 or $\bm\beta_t$ (Model C), with the corresponding $\bm G_\tau,\bm W_\tau$.
 
@@ -658,12 +664,12 @@ A convenient evaluable expansion is obtained by writing, for each $n$,
 \E_q[(y_n-\eta_n)^2]\E_q\!\left[\frac{1}{v_n}\right]
 -2A^s\,\E_q[y_n-\eta_n]
 +(A^s)^2\E_q[v_n]\right)\nonumber\\
-&-\frac{2C^s|\gamma^s|}{B^s}\left(
-\E_q[s_n]\E_q[y_n-\eta_n]\E_q\!\left[\frac{1}{v_n}\right]
--A^s\,\E_q[s_n]\right)
-+\frac{\sigma^s (C^s)^2(\gamma^s)^2}{B^s}\;\E_q[s_n^2]\E_q\!\left[\frac{1}{v_n}\right],
-\label{eq:vb_quad_expand}
-\end{align}
+	&-\frac{2C^s|\gamma^s|}{B^s}\left(
+	\E_q[s_n]\E_q[y_n-\eta_n]\E_q\!\left[\frac{1}{v_n}\right]
+	-A^s\,\E_q[s_n]\right)\nonumber\\
+	&\quad+\frac{\sigma^s (C^s)^2(\gamma^s)^2}{B^s}\;\E_q[s_n^2]\E_q\!\left[\frac{1}{v_n}\right],
+	\label{eq:vb_quad_expand}
+	\end{align}
 using mean-field independence between $(\eta_n)$, $v_n$, and $s_n$.
 
 \subsection{Closed-form expectations needed in VB}
@@ -705,17 +711,16 @@ Then
 \end{equation}
 
 \subsubsection*{(iii) Gaussian state-induced moments for $\eta_n$}
-If $q(\bm x_\tau)=\N(\bm m_\tau,\bm C_\tau)$ and $\eta_n=h_n^\T \bm x_{\tau(n)}$, then
-\begin{equation}
-\E_q[\eta_n]=h_n^\T \bm m_{\tau(n)},
-\qquad
-\Var_q(\eta_n)=h_n^\T \bm C_{\tau(n)} h_n,
-\qquad
-\E_q[(y_n-\eta_n)]=y_n-\E_q[\eta_n],
-\qquad
-\E_q[(y_n-\eta_n)^2]=(y_n-\E_q[\eta_n])^2+\Var_q(\eta_n).
-\label{eq:eta_moments}
-\end{equation}
+	If $q(\bm x_\tau)=\N(\bm m_\tau,\bm C_\tau)$ and $\eta_n=h_n^\T \bm x_{\tau(n)}$, then
+	\begin{equation}
+	\begin{aligned}
+	\E_q[\eta_n] &= h_n^\T \bm m_{\tau(n)},\\
+	\Var_q(\eta_n) &= h_n^\T \bm C_{\tau(n)} h_n,\\
+	\E_q[(y_n-\eta_n)] &= y_n-\E_q[\eta_n],\\
+	\E_q[(y_n-\eta_n)^2] &= (y_n-\E_q[\eta_n])^2+\Var_q(\eta_n).
+	\end{aligned}
+	\label{eq:eta_moments}
+	\end{equation}
 
 \subsubsection*{(iv) Useful derived expectations for observation variances}
 For $R_n=\sigma^s B^s v_n$ and $\tilde y_n$ in \eqref{eq:pseudo_obs_alg}, under mean-field,
@@ -1070,15 +1075,17 @@ Let $\mathcal{L}(q)$ denote the ELBO:
 \]
 All dependence on the trans-dimensional state enters through the moments of $\eta_n$ in \eqref{eq:eta_moments};
 the $(\sigma^s,\gamma^s)$ contributions are otherwise purely source-wise. For a fixed source $s$, define the
-ELBO component
-\begin{equation}
-\mathcal{L}_s^{(\sigma,\gamma)} :=
-\E_q[\log p(\sigma^s)] + \E_q[\log p(\gamma^s)]
-+ \sum_{n\in\mathcal{I}_s}\E_q[\log p(v_n\mid\sigma^s)]
-+ \sum_{n\in\mathcal{I}_s}\E_q[\log p(y_n\mid \eta_n,v_n,s_n,\sigma^s,\gamma^s)]
--\E_q[\log q(\sigma^s,\gamma^s)].
-\label{eq:elbo_block_def}
-\end{equation}
+	ELBO component
+	\begin{equation}
+	\begin{aligned}
+	\mathcal{L}_s^{(\sigma,\gamma)} :=\;&
+	\E_q[\log p(\sigma^s)] + \E_q[\log p(\gamma^s)]
+	+ \sum_{n\in\mathcal{I}_s}\E_q[\log p(v_n\mid\sigma^s)]\\
+	&+ \sum_{n\in\mathcal{I}_s}\E_q[\log p(y_n\mid \eta_n,v_n,s_n,\sigma^s,\gamma^s)]
+	-\E_q[\log q(\sigma^s,\gamma^s)].
+	\end{aligned}
+	\label{eq:elbo_block_def}
+	\end{equation}
 
 \paragraph{(i) Prior terms.}
 With $\sigma^s\sim \IG(a_\sigma,b_\sigma)$,
