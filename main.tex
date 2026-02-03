@@ -1005,8 +1005,10 @@ Define the transformed objective
 \paragraph{Remark (smoothness at $\gamma^s=0$).}
 Because the mapping $\gamma^s\mapsto(p^s,A^s,B^s,C^s)$ involves $|\gamma^s|$ (and sign indicators in $p(\cdot)$ and $C(\cdot)$),
 $f_s(\sigma^s,\gamma^s)$ need not be twice differentiable at $\gamma^s=0$.
-The Laplace approximation below implicitly assumes the mode $\hat\gamma^s$ lies away from such nonsmooth points
-(or, equivalently, that optimization is performed separately on $(L,0)$ and $(0,U)$).
+The Laplace approximation below implicitly assumes the mode $\hat\gamma^s$ lies away from such nonsmooth points.
+Operationally, maximize $\tilde f_s(u,\xi)$ twice: once with $\gamma^s(\xi)\in(L,0)$ and once with $\gamma^s(\xi)\in(0,U)$,
+and keep the maximizer with the larger objective value (if an unconstrained optimizer returns $|\hat\gamma^s|\le\varepsilon$ for small $\varepsilon$,
+rerun using this split optimization).
 
 \paragraph{Laplace approximation (mode and curvature).}
 Let
