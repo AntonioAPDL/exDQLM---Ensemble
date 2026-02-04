@@ -786,6 +786,18 @@ Initialize $\bm m_0=\bm m_0$, $\bm C_0=\bm C_0$. For $\tau=1,\dots,\mathcal{T}$:
 \bm C_\tau &= \bm P_\tau - \bm K_\tau \bm Q_\tau \bm K_\tau^\T. \label{eq:kf_filt_cov}
 \end{align}
 
+\paragraph{Implementation note (historical discounting for $\bm W_\tau$).}
+In the current \texttt{project1} implementation, the historical evolution covariance $\bm W_\tau$ is specialized via
+component-wise discount factors rather than inferred via inverse-Wishart updates.
+Let $\bm P_\tau^{(0)}:=\bm G_\tau \bm C_{\tau-1}\bm G_\tau^\T$.
+For each state-component block $b$ with discount factor $\delta_b\in(0,1)$, set
+\[
+\bm W_{\tau,b}:=\frac{1-\delta_b}{\delta_b}\,\bm P_{\tau,b}^{(0)},
+\qquad
+\bm P_{\tau,b}=\bm P_{\tau,b}^{(0)}+\bm W_{\tau,b}=\frac{1}{\delta_b}\bm P_{\tau,b}^{(0)}.
+\]
+In code this is implemented by a block-diagonal matrix of inflation factors and a Hadamard (element-wise) product.
+
 \paragraph{Implementation note (many independent scalar observations).}
 When $\bm R_\tau$ is diagonal and $d_\tau$ is large, avoid forming/inverting $\bm Q_\tau\in\R^{d_\tau\times d_\tau}$.
 Instead, assimilate observations sequentially:
@@ -883,6 +895,23 @@ Then the expected innovation outer-product is
 \label{eq:vb_innov_second_moment}
 \end{align}
 which can be plugged into the inverse-Wishart updates in CAVI step 4.
+
+\paragraph{Implementation note (forecast-period $\bm W_\tau$ plug-in update).}
+In the current \texttt{project1} implementation, forecast-period evolution covariances are updated by a shrinkage-stabilized
+plug-in rather than the inverse-Wishart CAVI update:
+\begin{equation}
+\widehat{\bm W}_{\tau}
+\leftarrow
+\frac{\epsilon}{\epsilon+1}\,c\,\widehat{\bm W}_{T}
+\;+\;
+\frac{1}{\epsilon+1}\,\widehat{\bm\Omega}_{\tau},
+\label{eq:forecast_W_plugin}
+\end{equation}
+where $\widehat{\bm W}_{T}$ is the (discount-implied) historical covariance at the terminal fit time $T$,
+$c>0$ is a fixed scale factor, and $\widehat{\bm\Omega}_{\tau}$ is a moment-based innovation estimate computed from the
+smoothed state moments. In the reference code, $\epsilon$ corresponds to \texttt{TT}, $c$ to \texttt{c\_factor},
+$\widehat{\bm W}_T$ to \texttt{W\_T} returned by the Kalman routine, and $\widehat{\bm\Omega}_\tau$ to the matrix
+\texttt{ww} constructed inside the forecast covariance update loop.
 
 \paragraph{Where this plugs in.}
 In the Gibbs sampler, replace step (3) \eqref{eq:gibbs_ffbs_placeholder} by the forward-filter/backward-sampler
@@ -994,6 +1023,11 @@ u^s := \log\sigma^s \in \R,
 \label{eq:transform_u_xi}
 \end{equation}
 with unconstrained $(u^s,\xi^s)\in\R^2$. The Jacobian is
+
+\paragraph{Numerical note (open interval $\gamma^s\in(L,U)$).}
+Although the logistic map in \eqref{eq:transform_u_xi} targets $\gamma^s\in(L,U)$ for any finite $\xi^s$, in floating-point
+computation one may clip $\pi(\xi^s)$ to $[\varepsilon,1-\varepsilon]$ for tiny $\varepsilon$ to avoid evaluating
+$p(p_0,\gamma^s)$ (hence $A^s,B^s,C^s$) exactly at boundary values where $p$ approaches $0$ or $1$.
 \begin{equation}
 \left|\frac{\partial(\sigma^s,\gamma^s)}{\partial(u^s,\xi^s)}\right|
 = \sigma^s\,(U-L)\,\pi(\xi^s)\big(1-\pi(\xi^s)\big),
