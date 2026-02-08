@@ -205,6 +205,32 @@ p(\bm\theta_{0:T},v_{1:T},s_{1:T},\sigma,\gamma \mid y_{1:T})
 where $\eta_t=\bm F_t^\T\bm\theta_t$ (or the appropriate linear predictor in Models A/B/C),
 and $A=A(p)$, $B=B(p)$, $C=C(p,\gamma)$ with $p=p(p_0,\gamma)$.
 
+\subsection{Computable complete log-joint form}
+Define the residual
+\[
+\varepsilon_t := y_t-\eta_t-C\sigma|\gamma|s_t-Av_t.
+\]
+Up to additive constants that do not depend on
+$(\bm\theta_{0:T},v_{1:T},s_{1:T},\sigma,\gamma)$, the complete augmented log-joint is
+\begin{align}
+\log p(\bm\theta_{0:T},v_{1:T},s_{1:T},\sigma,\gamma,y_{1:T})
+=\;&
+\log p(\bm\theta_0)+\log p(\sigma)+\log p(\gamma) \nonumber\\
+&-\frac12\sum_{t=1}^T\!\left[
+\log|\bm W_t|+
+(\bm\theta_t-\bm G_t\bm\theta_{t-1})^\T\bm W_t^{-1}(\bm\theta_t-\bm G_t\bm\theta_{t-1})
+\right] \nonumber\\
+&-\frac12\sum_{t=1}^T\!\left[
+\log(\sigma B v_t)+\frac{\varepsilon_t^2}{\sigma B v_t}
+\right]
+-T\log\sigma-\sum_{t=1}^T\frac{v_t}{\sigma}
+-\frac12\sum_{t=1}^T s_t^2
++\sum_{t=1}^T\log\!\1(v_t>0,s_t>0).
+\label{eq:complete_log_joint}
+\end{align}
+Equation \eqref{eq:complete_log_joint} is the implementation-ready objective used to
+derive kernels in Section~7 and expected-block updates in Sections~8--11.
+
 \section{Full conditionals (up to proportionality)}
 
 All conditionals below apply \emph{source-wise} (baseline and each forecaster), replacing $(y_t,\eta_t,\bm\theta_t,\sigma,\gamma)$ by the corresponding data/model-specific linear predictor:
