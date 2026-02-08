@@ -25,8 +25,8 @@
 \newcommand{\diag}{\mathrm{diag}}
 \newcommand{\BlockDiag}{\mathrm{BlockDiag}}
 \newcommand{\T}{\mathsf{T}}
-\newcommand{\phiN}{\varphi}
-\newcommand{\PhiN}{\Phi}
+\newcommand{\phiN}[1]{\varphi\!\left(#1\right)}
+\newcommand{\PhiN}[1]{\Phi\!\left(#1\right)}
 % Expectations / variance
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\Var}{\mathrm{Var}}
@@ -41,6 +41,7 @@
 \section{Notation and dimensions}
 
 Let $p_0\in(0,1)$ denote the target quantile. Historical (fit) period is $t=1,\dots,T$. Forecast period is $t=T+1,\dots,T+K_{(1)}$.
+Scope: this document covers the augmented exAL derivations for Models A--C only; it excludes non-exAL likelihood variants and non-augmented inference schemes.
 
 \paragraph{Core DLM objects (historical).}
 \begin{itemize}
@@ -174,7 +175,7 @@ For notational simplicity, the conditional derivations below drop the index $n$ 
 
 The mapping from $(p_0,\gamma)$ to $p$ and the functions $A,B,C$ are:
 \begin{align}
-g(\gamma) &= 2\,\PhiN(-|\gamma|)\exp(\gamma^2/2), \\
+g(\gamma) &= 2\,\PhiN{-|\gamma|}\exp(\gamma^2/2), \\
 p(p_0,\gamma) &= \1(\gamma<0) + \frac{p_0-\1(\gamma<0)}{g(\gamma)}, \\
 A(p) &= \frac{1-2p}{p(1-p)},\qquad B(p)=\frac{2}{p(1-p)},\qquad C(p,\gamma)=\big(\1(\gamma>0)-p\big)^{-1}.
 \end{align}
@@ -699,7 +700,7 @@ where $\partial_\lambda \log K_\lambda(\Delta)$ is computed numerically.
 
 \subsubsection*{(ii) Moments under $q(s_n)=\N^+(m,V)$ (truncation to $(0,\infty)$)}
 Let $S\sim\N^+(m,V)$ with $V>0$ and set $u=m/\sqrt{V}$.
-Define the inverse Mills ratio $\kappa(u):=\phiN(u)/\PhiN(u)$.
+Define the inverse Mills ratio $\kappa(u):=\phiN{u}/\PhiN{u}$.
 Then
 \begin{equation}
 \E[S]=m+\sqrt{V}\,\kappa(u),
@@ -1403,7 +1404,7 @@ gives a closed form for $\mathcal{L}_{W_b}(q)$.
 
 \subsection{Latent truncation prior for \texorpdfstring{$s_n$}{sn}: \texorpdfstring{$\mathcal{L}_{n}^{(s\text{-prior})}(q)$}{Ln(s-prior)(q)}}
 
-The augmentation prior is $s_n\sim\N^+(0,1)$ with density $p(s)=2\phiN(s)\1(s>0)$.
+The augmentation prior is $s_n\sim\N^+(0,1)$ with density $p(s)=2\phiN{s}\1(s>0)$.
 Thus,
 \begin{equation}
 \mathcal{L}_{n}^{(s\text{-prior})}(q)
@@ -1439,7 +1440,7 @@ where $\E_q[v_n]$, $\E_q[1/v_n]$, and $\E_q[\log v_n]$ are given by
 \eqref{eq:gig_moments_1}--\eqref{eq:gig_log_moment}.
 
 \paragraph{Entropy of $q(s_n)=\N^+(m_n,V_n)$.}
-Let $S\sim \N^+(m,V)$ with $u=m/\sqrt{V}$ and $\kappa(u)=\phiN(u)/\PhiN(u)$.
+Let $S\sim \N^+(m,V)$ with $u=m/\sqrt{V}$ and $\kappa(u)=\phiN{u}/\PhiN{u}$.
 Then
 \begin{equation}
 \mathcal{H}_{s_n}(q)
@@ -1448,7 +1449,7 @@ Then
 =
 \frac12\log(2\pi V_n)
 +\frac12\big(1-u_n\kappa(u_n)\big)
-+\log\PhiN(u_n),
++\log\PhiN{u_n},
 \qquad u_n=\frac{m_n}{\sqrt{V_n}},
 \label{eq:entropy_truncnorm}
 \end{equation}
