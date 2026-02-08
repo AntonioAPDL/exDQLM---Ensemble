@@ -1508,6 +1508,14 @@ so small non-monotone ELBO fluctuations can occur from approximation error.
 In implementation, record the total ELBO and each additive block in
 \eqref{eq:full_elbo_decomp}; flag any persistent ELBO decrease as a derivation or numerics issue.
 
+\subsection*{Planned validations}
+\begin{itemize}
+\item Compare FFBS state moments against direct Gaussian conditioning on toy dimensions.
+\item Verify each closed-form conditional kernel by finite-grid normalization checks.
+\item Check CAVI fixed-point consistency by re-evaluating all factor parameters from the final moments.
+\item Track ELBO components separately and require bounded relative change before stopping.
+\end{itemize}
+
 \section*{Audit statement}
 This document now contains a complete augmented factorization
 \eqref{eq:joint_aug}, an explicit computable log-joint \eqref{eq:complete_log_joint},
