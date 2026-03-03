@@ -158,6 +158,86 @@ y_T^{j,i}(k)\mid \bm\beta_{T+k},\sigma^j,\gamma^j,v_{T+k}^{j,i},s_{T+k}^{j,i}
 \end{align}
 with $v_{T+k}^{j,i}\mid\sigma^j\sim \Exp(\text{rate}=1/\sigma^j)$ and $s_{T+k}^{j,i}\sim \N^+(0,1)$.
 
+\section{Model C-T (forecast period: ensemble forecasts; transfer retained)}
+\label{sec:model_c_transfer_retained}
+
+This alternative forecast-stage specification keeps the transfer block active during
+$t=T+1,\dots,T+K_{(1)}$.
+Let $r:=1+m$ denote the transfer-state dimension (for $(\zeta_t,\bm\psi_t)$).
+
+\paragraph{Segment-wise state (active forecasters may shrink by lead time).}
+For forecast segment $s$ (with $a_s$ active forecasters), define
+\[
+\bm\beta_t^{(s)}=
+\begin{bmatrix}
+\bm\theta_t\\
+\bm\delta_t^{1:a_s}\\
+\bm\tau_t
+\end{bmatrix}
+\in\R^{p_t^{(s)}},
+\qquad
+\bm\tau_t=
+\begin{bmatrix}
+\zeta_t\\
+\bm\psi_t
+\end{bmatrix}\in\R^r,
+\qquad
+p_t^{(s)}=q(1+a_s)+r.
+\]
+Compared with Model C, the transfer block $\bm\tau_t$ is \emph{not} dropped.
+
+\paragraph{Forecast observation equation (source/member level).}
+For active source $j\in\{1,\dots,a_s\}$ and member $i$:
+\begin{align}
+y_T^{j,i}(k)\mid \bm\beta_{T+k}^{(s)},\sigma^j,\gamma^j
+&\sim \mathrm{exAL}_{p_0}\!\big((\bm h_{T+k,j}^{(s)})^\T\bm\beta_{T+k}^{(s)},\;\sigma^j,\;\gamma^j\big),
+\end{align}
+where $\bm h_{T+k,j}^{(s)}$ loads (i) baseline state $\bm\theta_t$, (ii) discrepancy block $\bm\delta_t^j$,
+and (iii) transfer contribution via $\zeta_t$ (and any retained transfer regressors).
+
+\paragraph{Forecast transition equation.}
+\begin{align}
+\bm\beta_t^{(s)}\mid \bm\beta_{t-1}^{(s)}
+&\sim \N\!\big(\bm M_t^{(s)}\bm\beta_{t-1}^{(s)},\;\bm W_t^{(s)}\big),\label{eq:CT_state}
+\end{align}
+with block-diagonal transition
+\[
+\bm M_t^{(s)}=
+\BlockDiag\!\big(
+\underbrace{\bm G_t,\dots,\bm G_t}_{1+a_s\ \text{blocks}},
+\bm G_t^{\mathrm{trans}}
+\big),
+\qquad
+\bm G_t^{\mathrm{trans}}=
+\begin{bmatrix}
+\lambda & \bm x_t^\T\\
+\bm 0_m & \bm I_m
+\end{bmatrix}.
+\]
+Thus $\bm x_t$ can continue driving transfer dynamics during forecast.
+
+\paragraph{Boundary map at $T\to T+1$ and across forecast segments.}
+Let $\bm x_T^{\mathrm{hist}}\in\R^{q(1+J_f)+r}$ denote the historical terminal state
+(including transfer). The first forecast state is obtained by
+\[
+\bm\beta_{T}^{(1)}=\bm P_{T\to T+1}\bm x_T^{\mathrm{hist}},
+\qquad
+\bm C_{T}^{(1)}=\bm P_{T\to T+1}\bm C_T^{\mathrm{hist}}\bm P_{T\to T+1}^\T,
+\]
+where $\bm P_{T\to T+1}$ keeps baseline/discrepancy blocks and the transfer block.
+If active forecasters decrease between forecast segments ($a_s\to a_{s+1}$), use
+\[
+\bm\beta_t^{(s+1)}=\bm P_{s\to s+1}\bm\beta_t^{(s)},
+\qquad
+\bm C_t^{(s+1)}=\bm P_{s\to s+1}\bm C_t^{(s)}\bm P_{s\to s+1}^\T,
+\]
+with $\bm P_{s\to s+1}$ dropping only inactive discrepancy blocks while preserving transfer coordinates.
+
+\paragraph{Remark (reduction to Model C).}
+Model C is recovered by removing $\bm\tau_t$ from $\bm\beta_t^{(s)}$
+and deleting the corresponding rows/columns of $\bm M_t^{(s)}$, $\bm W_t^{(s)}$,
+and the observation loadings $\bm h_{t,j}^{(s)}$.
+
 \section{exAL augmentation used for posterior derivations}
 
 \paragraph{Per-observation augmentation (used in Models A/B/C).}
